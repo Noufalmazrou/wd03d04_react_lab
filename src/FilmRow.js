@@ -10,14 +10,15 @@ console.log("Fetching details for "+ el);
 
 
    render() {
-      var year = new Date(this.props.date );
+      var year = new Date(this.props.film.release_date );
       return (
-       <div className = 'film-row'onClick = {()=>this.handleDetailsClick(this.props.item)} >
-        <img src = {`https://image.tmdb.org/t/p/w780/${this.props.poster}`} />
+       <div className = 'film-row'onClick = {()=>this.handleDetailsClick(this.props.film.title)} >
+        <img src = {`https://image.tmdb.org/t/p/w780/${this.props.film.poster_path}`} />
         <div className = ' film-summary' >
-        <Fave />
-        <h3>{this.props.item}</h3>
+        <Fave onFaveToggle={this.props.onFaveToggle} />
+        <h3>{this.props.film.title}</h3>
         <p>{year.getFullYear()}</p> 
+        
         </div>
    </div> 
       )

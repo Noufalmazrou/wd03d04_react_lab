@@ -11,9 +11,10 @@ export default class FilmListing extends Component {
         filter : 'all'
     }
 }
-     filmRow = this.props.films.map(item =>{ 
-        return <FilmRow  item={item.title} poster={item.poster_path} date ={item.release_date}  />
-    })
+    //  filmRow = this.props.films.map(item =>{ 
+    //     return <FilmRow  item={item.title} poster={item.poster_path} date ={item.release_date}  />
+    // })
+    
 
     handleFilterClick = (filter)=> {
         this.setState({
@@ -23,6 +24,15 @@ export default class FilmListing extends Component {
    
 
     render() {
+        const allFilms = this.props.films.map((film) => {
+            return (
+            <FilmRow
+            film={film}
+            key={film.id}
+            onFaveToggle={() => this.props.onFaveToggle(film)}
+            />
+          )
+          })
         return (
                              
 <div className="film-list">
@@ -38,7 +48,8 @@ export default class FilmListing extends Component {
             <span className="section-count">0</span>
         </div>
         </div>
-        {this.filmRow}
+        
+        {allFilms}
     </div>
     
 

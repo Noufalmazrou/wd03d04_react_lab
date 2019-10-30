@@ -8,16 +8,43 @@ import TMDB from './TMDB'
 import './normalize.css'
 
 import React, { Component } from 'react'
+import { tsConstructorType } from '@babel/types';
 export default class App extends Component {
+ 
+  constructor(){
+    super()
+    this.handleFaveToggle = this.handleFaveToggle.bind(this)
+  this.state= {
+    films : TMDB.films,
+    faves :[],
+    current : [],
+   
+  }
+  }
+  handleFaveToggle (film){
+const faves = this.state.faves.slice()
+const filmIndex = faves.indexOf(film)
+if (filmIndex >= 0 ){
+  console.log (`Removing ${film.title} from faves`)
+  faves.splice(filmIndex,1)
+}
+else {
+  faves.push (film)
+  console.log (`Adding ${film.title} to faves`)
+}
+this.setState({faves})
+
+}
   render() {
     return (
       <div className="film-library">
    
-      <FilmListing films={TMDB.films}/>
-      <div className="film-details">
-        <h1 className="section-title">DETAILS</h1>
-        
-      </div>
+      <FilmListing
+       films={this.state.films}
+        faves = {this.state.faves}
+        onFaveToggle = {this.handleFaveToggle}
+        />
+    <FilmDetails current={this.state.current}/>
 
     </div>
     )
