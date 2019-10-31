@@ -17,7 +17,7 @@ export default class App extends Component {
   this.state= {
     films : TMDB.films,
     faves :[],
-    current : [],
+    current : {}
    
   }
   }
@@ -32,9 +32,16 @@ else {
   faves.push (film)
   console.log (`Adding ${film.title} to faves`)
 }
+
 this.setState({faves})
 
 }
+
+handleDetailsClick = (film =>{
+  console.log("Fetching details for "+ film);
+  this.setState({current:film})
+     })
+
   render() {
     return (
       <div className="film-library">
@@ -43,7 +50,9 @@ this.setState({faves})
        films={this.state.films}
         faves = {this.state.faves}
         onFaveToggle = {this.handleFaveToggle}
+        handleDetailsClick = {this.handleDetailsClick}
         />
+
     <FilmDetails current={this.state.current}/>
 
     </div>
