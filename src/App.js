@@ -6,6 +6,7 @@ import FilmListing from './FilmListing'
 import FlimRow from './FilmRow'
 import TMDB from './TMDB'
 import './normalize.css'
+import axios from 'axios'
 
 import React, { Component } from 'react'
 import { tsConstructorType } from '@babel/types';
@@ -33,13 +34,23 @@ else {
   console.log (`Adding ${film.title} to faves`)
 }
 
-this.setState({faves})
+this.setState({faves});
 
 }
 
 handleDetailsClick = (film =>{
   console.log("Fetching details for "+ film);
-  this.setState({current:film})
+
+  this.setState({current :film })
+  const url = `https://api.themoviedb.org/3/movie/${film.id}?api_key=${TMDB.api_key}&append_to_response=videos,images&language=en`
+  axios({
+    method: 'GET',
+    url: url
+  }).then(response => {
+    console.log(response) // take a look at what you get back!
+    this.setState({current: response.data})
+  })
+ 
      })
 
   render() {
